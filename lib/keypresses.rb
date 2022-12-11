@@ -3,7 +3,7 @@ require_relative 'webnav.rb'
 
 cmode = :normal
 cvol = 345
-`osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
+#`osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
 Remote.keypresses do |r|
   r.oncode '00' do |h|
     if h == 0
@@ -23,7 +23,7 @@ Remote.keypresses do |r|
     if h != 1
       if cvol + 20 < 690
         cvol = cvol + 20
-        `osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
+ #       `osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
       end
     end
   end
@@ -32,7 +32,7 @@ Remote.keypresses do |r|
     if h != 1
       if cvol - 20 > 1
         cvol = cvol - 20
-        `osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
+  #      `osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
       end
     end
   end
