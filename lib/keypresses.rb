@@ -26,7 +26,7 @@ Remote.keypresses do |r|
 
   r.oncode '04' do |h|
     if h != 1
-      `amixer -D pulse sset Master 2-+`
+      `amixer -D pulse sset Master 2%-`
     end
   end
 
