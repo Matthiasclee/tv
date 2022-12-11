@@ -2,8 +2,7 @@ require_relative 'remote.rb'
 require_relative 'webnav.rb'
 
 cmode = :normal
-cvol = 345
-#`osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
+`amixer -D pulse sset Master 50%`
 Remote.keypresses do |r|
   r.oncode '00' do |h|
     if h == 0
@@ -21,19 +20,13 @@ Remote.keypresses do |r|
 
   r.oncode '03' do |h|
     if h != 1
-      if cvol + 20 < 690
-        cvol = cvol + 20
- #       `osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
-      end
+      `amixer -D pulse sset Master 2%+`
     end
   end
 
   r.oncode '04' do |h|
     if h != 1
-      if cvol - 20 > 1
-        cvol = cvol - 20
-  #      `osascript -e 'tell application "Finder" to set volume #{cvol.to_f/100}'`
-      end
+      `amixer -D pulse sset Master 2-+`
     end
   end
 
