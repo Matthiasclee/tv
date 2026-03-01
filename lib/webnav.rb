@@ -1,19 +1,29 @@
 require 'selenium-webdriver'
 
-# User agent setup
-user_agent = 'Mozilla/5.0 (SMART-TV; Linux) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15'
+profile_dir = File.expand_path("ffprofile")
+FileUtils.mkdir_p(profile_dir)
 
-profile = Selenium::WebDriver::Firefox::Profile.new
-profile['general.useragent.override'] = user_agent
-profile['full-screen-api.allow-trusted-requests-only'] = false
-profile['full-screen-api.approval-required'] = false
-profile['full-screen-api.warning.timeout'] = 0
-profile['browser.fullscreen.exit_on_escape'] = false
-options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
-options.add_argument "--kiosk"
+options = Selenium::WebDriver::Firefox::Options.new()
+
+options.add_argument("-profile")
+options.add_argument(profile_dir)
+
+#options.add_argument "--kiosk"
 DRIVER = Selenium::WebDriver.for :firefox, options: options
 
-DRIVER.manage.window.full_screen
+File.write(
+  "#{profile_dir}/user.js",
+<<PREFS,
+user_pref("general.useragent.override", 'Mozilla/5.0 (SMART-TV; Linux) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15');
+user_pref("full-screen-api.allow-trusted-requests-only", false);
+user_pref("full-screen-api.approval-required", false);
+user_pref("full-screen-api.warning.timeout", 0);
+user_pref("browser.fullscreen.exit_on_escape", false);
+PREFS
+mode: "a"
+)
+
+#DRIVER.manage.window.full_screen
   
 module WebNav
   def self.go_to(p)

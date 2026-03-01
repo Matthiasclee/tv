@@ -64,3 +64,7 @@ end
 Remote.oncode 'sh15A1' do
   WebNav.go_to :youtube
 end
+
+Remote.oncode 'sh15AB' do
+  WebNav.save_cookies
+end
