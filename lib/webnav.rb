@@ -9,7 +9,7 @@ options = Selenium::WebDriver::Firefox::Options.new()
 options.add_argument("-profile")
 options.add_argument(profile_dir)
 
-#options.add_argument "--kiosk"
+options.add_argument "--kiosk"
 DRIVER = Selenium::WebDriver.for :firefox, options: options
 
 File.write(
@@ -27,7 +27,7 @@ mode: "a"
 lines = File.readlines(prefs_path, chomp: true).uniq
 File.write(prefs_path, lines.join("\n") + "\n")
 
-#DRIVER.manage.window.full_screen
+DRIVER.manage.window.full_screen
   
 module WebNav
   def self.go_to(p)
